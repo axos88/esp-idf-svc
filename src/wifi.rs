@@ -174,7 +174,7 @@ impl From<Newtype<&wifi_ap_record_t>> for AccessPointInfo {
                 wifi_second_chan_t_WIFI_SECOND_CHAN_BELOW => SecondaryChannel::Below,
                 _ => panic!(),
             },
-            signal_strength: a.rssi as u8,
+            signal_strength: a.rssi as _,
             protocols: EnumSet::<Protocol>::empty(), // TODO
             auth_method: AuthMethod::from(Newtype::<wifi_auth_mode_t>(a.authmode)),
         }
@@ -639,7 +639,7 @@ where
         WifiDriver::is_started(self)
     }
 
-    fn is_up(&self) -> Result<bool, Self::Error> {
+    fn is_connected(&self) -> Result<bool, Self::Error> {
         WifiDriver::is_up(self)
     }
 
@@ -659,6 +659,22 @@ where
 
     fn scan(&mut self) -> Result<alloc::vec::Vec<AccessPointInfo>, Self::Error> {
         WifiDriver::scan(self)
+    }
+
+    fn start(&mut self) -> Result<(), Self::Error> {
+        WifiDriver::start(self)
+    }
+
+    fn stop(&mut self) -> Result<(), Self::Error> {
+        WifiDriver::stop(self)
+    }
+
+    fn connect(&mut self) -> Result<(), Self::Error> {
+        WifiDriver::connect(self)
+    }
+
+    fn disconnect(&mut self) -> Result<(), Self::Error> {
+        WifiDriver::disconnect(self)
     }
 }
 
@@ -853,7 +869,7 @@ where
         EspWifi::is_started(self)
     }
 
-    fn is_up(&self) -> Result<bool, Self::Error> {
+    fn is_connected(&self) -> Result<bool, Self::Error> {
         EspWifi::is_up(self)
     }
 
@@ -871,8 +887,24 @@ where
         EspWifi::scan_n(self)
     }
 
-    fn scan(&mut self) -> Result<alloc::vec::Vec<AccessPointInfo>, Self::Error> {
+    fn scan(&mut self) -> Result<Vec<AccessPointInfo>, Self::Error> {
         EspWifi::scan(self)
+    }
+
+    fn start(&mut self) -> Result<(), Self::Error> {
+        EspWifi::start(self)
+    }
+
+    fn stop(&mut self) -> Result<(), Self::Error> {
+        EspWifi::stop(self)
+    }
+
+    fn connect(&mut self) -> Result<(), Self::Error> {
+        EspWifi::connect(self)
+    }
+
+    fn disconnect(&mut self) -> Result<(), Self::Error> {
+        EspWifi::disconnect(self)
     }
 }
 
@@ -1088,7 +1120,7 @@ where
         EspRawWifi::is_started(self)
     }
 
-    fn is_up(&self) -> Result<bool, Self::Error> {
+    fn is_connected(&self) -> Result<bool, Self::Error> {
         EspRawWifi::is_up(self)
     }
 
@@ -1108,6 +1140,22 @@ where
 
     fn scan(&mut self) -> Result<alloc::vec::Vec<AccessPointInfo>, Self::Error> {
         EspRawWifi::scan(self)
+    }
+
+    fn start(&mut self) -> Result<(), Self::Error> {
+        EspRawWifi::start(self)
+    }
+
+    fn stop(&mut self) -> Result<(), Self::Error> {
+        EspRawWifi::stop(self)
+    }
+
+    fn connect(&mut self) -> Result<(), Self::Error> {
+        EspRawWifi::connect(self)
+    }
+
+    fn disconnect(&mut self) -> Result<(), Self::Error> {
+        EspRawWifi::disconnect(self)
     }
 }
 
